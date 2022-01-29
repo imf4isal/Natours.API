@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/mdfaisalabdullah/Natours.API#readme",
   "dependencies": {
+    "dotenv": "^14.3.2",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "prettier": "^2.5.1"
   }
 }
