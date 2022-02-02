@@ -20,6 +20,7 @@ mongoose
 const importData = async () => {
   try {
     await Tour.create(tours);
+    console.log('successfully imported data');
   } catch (err) {
     console.log(err);
   }

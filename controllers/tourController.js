@@ -1,5 +1,7 @@
 const Tour = require('./../Model/tourModel');
 
+exports.aliasTopT;
+
 exports.getAllTours = async (req, res) => {
   try {
     // filtering
@@ -41,11 +43,26 @@ exports.getAllTours = async (req, res) => {
       query = query.select('-__v');
     }
 
+    // pagination
+
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+
+    // page 2, limit 10, 11-20
+
+    query = query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const totalDocument = await Tour.countDocuments();
+
+      if (totalDocument <= skip) throw new Error('nothing found.');
+    }
+
     const tours = await query;
 
     res.status(200).json({
       status: 'success',
-
       results: tours.length,
       data: {
         tours
