@@ -2,10 +2,13 @@ const Tour = require('./../Model/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
+    // filtering
     const queryObj = { ...req.query };
     const excludeFields = ['page', 'sort', 'limit', 'fields'];
 
     excludeFields.forEach(el => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
 
     // const tours = await Tour.find(queryObj);
     // const tours = await Tour.find()
@@ -14,7 +17,10 @@ exports.getAllTours = async (req, res) => {
     //   .where('difficulty')
     //   .equals('easy');
 
-    const query = Tour.find(queryObj);
+    //Advanced Filtering
+    queryStr = queryStr.replace(/\b(gte|lte|gt|lt)\b/g, match => `$${match}`);
+
+    let query = Tour.find(JSON.parse(queryStr));
 
     const tours = await query;
 
@@ -77,17 +83,17 @@ exports.updateTour = async (req, res) => {
       new: true,
       runValidators: true
     });
-    console.log(tour);
+
     res.status(200).json({
       status: 'success',
       data: {
-        tour: tour
+        tour
       }
     });
   } catch (err) {
     res.status(404).json({
-      status: 'ERROR',
-      message: 'Invalid Data Sent.'
+      status: 'fail',
+      message: err
     });
   }
 };
