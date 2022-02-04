@@ -63,6 +63,10 @@ const tourSchema = new mongoose.Schema(
 
 // virtual properties does not usually show up and doesnt have query method
 
+tourSchema.virtual('durationWeeks').get(function() {
+  return this.duration / 7;
+});
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 // const testTour = new Tour({
