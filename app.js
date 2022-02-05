@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -41,19 +42,18 @@ app.use('*', (req, res, next) => {
   // err.statusCode = 404;
   // whatever we pass into next function, will be considered as an error, then it will directly trigger global error function. work for any middleware. if we pass error into next function,it will skip all middleware function before global error function.
   // next(err);
-  /////before creating class
+  /////before creating class ^^
+
+  next(
+    new AppError(
+      `Couldn't found any valid result for ${req.originalUrl} in the server.`,
+      404
+    )
+  );
 });
 
 // if we use for argument after app.use, express will automatically identify as a global error
 
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
-
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message
-  });
-});
+app.use(globalErrorHandler);
 
 module.exports = app;
