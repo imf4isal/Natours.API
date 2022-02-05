@@ -41,7 +41,7 @@ const tourSchema = new mongoose.Schema(
       default: 4.5,
       // validator work for numbers and date
       min: [1, 'rating must be 1 or above.'],
-      max: [1, 'rating must be 5 or less.']
+      max: [5, 'rating must be 5 or less.']
     },
     ratingsQuantity: {
       type: Number,
