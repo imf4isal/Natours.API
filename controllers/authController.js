@@ -15,6 +15,21 @@ const signToken = id => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true // browser cannot not change or modify cookie. only can receive it and store id and send it back. nothing else
+  };
+
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; // only work for https. because hacker can read data over http connection
+
+  res.cookie('jwt', token, cookieOptions);
+
+  // remove password from output
+
+  user.password = undefined;
+
   res.status(statusCode).json({
     status: 'success',
     token,
