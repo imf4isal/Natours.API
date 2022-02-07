@@ -92,17 +92,30 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   //Check if user changed password after the token was issued
-  if (currentUser.changePasswordAfter(decoded.iat)) {
-    return next(
-      new AppError(
-        'The user belonging to this token recently changed password.Please log in again.',
-        401
-      )
-    );
-  }
+  // if (currentUser.changePasswordAfter(decoded.iat)) {
+  //   return next(
+  //     new AppError(
+  //       'The user belonging to this token recently changed password.Please log in again.',
+  //       401
+  //     )
+  //   );
+  // }
 
   // Grant access
   req.user = currentUser;
 
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to delete this.'),
+        403
+      );
+    }
+
+    next();
+  };
+};
