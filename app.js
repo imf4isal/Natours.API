@@ -48,7 +48,7 @@ app.use(
     whitelist: [
       'duration',
       'ratingsQuantity',
-      'ratingsAverage',
+      'ratingsAveragit ge',
       'difficulty',
       'price'
     ]
