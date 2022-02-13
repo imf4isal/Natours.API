@@ -5,7 +5,8 @@ const Tour = require('./../../Model/tourModel');
 
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace('<password>', process.env.PASSWORD);
+// const DB = process.env.DATABASE.replace('<password>', process.env.PASSWORD);
+const DB = 'mongodb://127.0.0.1/natours';
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`));
 
