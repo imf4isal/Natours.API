@@ -16,8 +16,14 @@ router.patch(
   authController.updatePassword
 );
 
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+router.patch('/updateme', authController.protect, userController.updateMe);
+router.delete('/deleteme', authController.protect, userController.deleteMe);
+router.get(
+  '/me',
+  authController.protect,
+  userController.getMe,
+  userController.getUser
+); // every api has /me routes
 
 router
   .route('/')
