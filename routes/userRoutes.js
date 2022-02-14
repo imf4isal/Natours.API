@@ -10,20 +10,15 @@ router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+// protect all this middleware after this middleware
+router.use(authController.protect);
 
-router.patch('/updateme', authController.protect, userController.updateMe);
-router.delete('/deleteme', authController.protect, userController.deleteMe);
-router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-); // every api has /me routes
+router.patch('/updateMyPassword', authController.updatePassword);
+router.patch('/updateme', userController.updateMe);
+router.delete('/deleteme', userController.deleteMe);
+router.get('/me', userController.getMe, userController.getUser); // every api has /me routes
+
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
