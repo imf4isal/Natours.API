@@ -121,6 +121,14 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// single field index
+
+// tourSchema.index({ price: 1 }); // 1 is ascending order, -1 descending
+
+//compound index
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 // virtual properties does not usually show up and doesnt have query method
 
 tourSchema.virtual('durationWeeks').get(function() {
