@@ -42,7 +42,8 @@ const tourSchema = new mongoose.Schema(
       default: 4.5,
       // validator work for numbers and date
       min: [1, 'rating must be 1 or above.'],
-      max: [5, 'rating must be 5 or less.']
+      max: [5, 'rating must be 5 or less.'],
+      set: val => Math.round(val * 10) / 10
     },
     ratingsQuantity: {
       type: Number,
@@ -128,7 +129,7 @@ const tourSchema = new mongoose.Schema(
 //compound index
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
-
+tourSchema.index({ startLocation: '2dsphere' });
 // virtual properties does not usually show up and doesnt have query method
 
 tourSchema.virtual('durationWeeks').get(function() {
