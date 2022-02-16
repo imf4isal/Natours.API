@@ -20,6 +20,7 @@ const tourSchema = new mongoose.Schema(
       minlength: [10, 'A tour name must have 10 char or more.']
       // validate: [validator.isAlpha, 'name should be alphaneumeric.']
     },
+    slug: String,
     duration: {
       type: Number,
       required: [true, 'A tour must have duration.']
