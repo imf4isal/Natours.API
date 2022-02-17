@@ -54,7 +54,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // check if user provide email and password
   if (!email || !password) {
-    return next(new AppError('Please provide valid email and password', 400));
+    return next(new AppError('Please provide valid email and passwordd', 400));
   }
 
   //check if user exist and password is correct
@@ -82,8 +82,9 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
-  console.log(token);
 
   if (!token) {
     return next(new AppError('You are not logged in, please log in', 401));
