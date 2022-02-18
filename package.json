@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mdfaisalabdullah/Natours.API#readme",
   "dependencies": {
+    "axios": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^14.3.2",

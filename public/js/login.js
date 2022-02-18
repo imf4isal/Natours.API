@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 const login = async (email, password) => {
   console.log(email, password);
   try {
@@ -11,9 +10,16 @@ const login = async (email, password) => {
         password
       }
     });
-    console.log(res);
+
+    if (res.data.status === 'success') {
+      alert('Logged In successfully . Click ok.');
+
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
   } catch (err) {
-    console.log(err.response.data);
+    alert(err.response.data.message);
   }
 };
 

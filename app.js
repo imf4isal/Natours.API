@@ -106,3 +106,6 @@ app.use('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
+
+// "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+// "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
